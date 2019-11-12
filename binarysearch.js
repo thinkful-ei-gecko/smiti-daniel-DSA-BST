@@ -117,18 +117,20 @@ function tree(t) {
 
 function main() {
   const BST = new BinaryTree();
-  BST.insert(3);
-  BST.insert(1);
-  BST.insert(4);
-  BST.insert(6);
-  BST.insert(9, 1);
-  BST.insert(2, 2);
-  BST.insert(5, 3);
-  BST.insert(7);
+//   BST.insert(3);
+//   BST.insert(1);
+//   BST.insert(4);
+//   BST.insert(6);
+//   BST.insert(9, 1);
+//   BST.insert(2, 2);
+//   BST.insert(5, 3);
+//   BST.insert(7);
 
-  //let easy = ['E', 'A', 'S', 'Y', 'Q', 'U', 'E', 'S', 'T', 'I', 'O', 'N'];
+  let easy = ['E', 'A', 'S', 'Y', 'Q', 'U', 'E', 'S', 'T', 'I', 'O', 'N'];
+  easy.forEach(alpha => BST.insert(alpha));
 
   console.log(height(BST));
+  console.log(isItBSTree(BST));
 }
 
 main();
@@ -151,10 +153,47 @@ function height(tree) {
   if (!tree) {
     return 0;
   }
+  if(!tree.left && !tree.right){
+      return 1;
+  }
+  let heightl = 0;
   if (tree.right) {
-    return 1 + height(tree.right);
+    let rightHeight = 1 + height(tree.right);
+    if(rightHeight > heightl){
+        heightl = rightHeight;
+    }
+    
   }
-  if (tree.right === null) {
-    return 0 + height(tree.left);
+  if (tree.right) {
+    let leftHeight =  1 + height(tree.left);
+    if(leftHeight > heightl){
+        heightl = leftHeight;
+    }
   }
+  return heightl;
+}
+
+
+function isItBSTree(tree){
+    if(!tree){
+        return false;
+    }
+    if(tree.right){
+        if(tree.right.key > tree.key){
+            isItBSTree(tree.right)
+        }
+        else{
+            return false;
+        }
+    }
+    if(tree.left){
+        if(tree.left.key < tree.key){
+            isItBSTree(tree.left)
+        }
+        else{
+            return false;
+        }
+    }
+
+    return true;
 }
