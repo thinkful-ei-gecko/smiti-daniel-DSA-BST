@@ -8,7 +8,7 @@ class BinaryTree {
   }
 
   //insertion
-  insert(key, value) {
+  insert(key, value, root = true) {
     if (this.key == null) {
       this.key = key;
       this.value = value;
@@ -117,20 +117,22 @@ function tree(t) {
 
 function main() {
   const BST = new BinaryTree();
-//   BST.insert(3);
-//   BST.insert(1);
-//   BST.insert(4);
-//   BST.insert(6);
-//   BST.insert(9, 1);
-//   BST.insert(2, 2);
-//   BST.insert(5, 3);
-//   BST.insert(7);
+  BST.insert(3, 25);
+  BST.insert(1, 10);
+  BST.insert(4, 5);
+  BST.insert(6, 4);
+  BST.insert(9, 1);
+  BST.insert(2, 2);
+  BST.insert(5, 3);
+  BST.insert(7, 3);
 
-  let easy = ['E', 'A', 'S', 'Y', 'Q', 'U', 'E', 'S', 'T', 'I', 'O', 'N'];
-  easy.forEach(alpha => BST.insert(alpha));
+  // let easy = ['E', 'A', 'S', 'Y', 'Q', 'U', 'E', 'S', 'T', 'I', 'O', 'N'];
+  // easy.forEach(alpha => BST.insert(alpha));
 
   console.log(height(BST));
   console.log(isItBSTree(BST));
+  console.log(getThird(BST))
+  console.log(isBalanced(BST))
 }
 
 main();
@@ -196,4 +198,27 @@ function isItBSTree(tree){
     }
 
     return true;
+}
+
+//7. Get the third largest node. 
+function getThird(tree) {
+  if (tree.right.right.right === null) {
+    return tree.key
+  }
+
+  return getThird(tree.right)
+}
+
+
+function isBalanced(tree) {
+  if (!tree) {
+     return false;
+  }
+  if (!tree.right && !tree.left) {
+    return true;
+  }
+  if (Math.abs(height(tree.right) - height(tree.left)) > 1) {
+    return false;
+  }
+  return true;
 }
