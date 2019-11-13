@@ -129,10 +129,12 @@ function main() {
   // let easy = ['E', 'A', 'S', 'Y', 'Q', 'U', 'E', 'S', 'T', 'I', 'O', 'N'];
   // easy.forEach(alpha => BST.insert(alpha));
 
-  console.log(height(BST));
-  console.log(isItBSTree(BST));
-  console.log(getThird(BST))
-  console.log(isBalanced(BST))
+  // console.log(height(BST));
+  console.log(balanced(BST))
+
+  // console.log(isItBSTree(BST));
+  // console.log(getThird(BST))
+  // console.log(isBalanced(BST))
 }
 
 main();
@@ -210,14 +212,50 @@ function getThird(tree) {
 }
 
 
-function isBalanced(tree) {
+// function isBalanced(tree) {
+//   if (!tree) {
+//      return false;
+//   }
+//   if (!tree.right && !tree.left) {
+//     console.log('we are in the middle')
+//     return true;
+//   }
+//   if (Math.abs(height(tree.right) - height(tree.left)) > 1) {
+//     return false;
+//   }
+//   console.log('broke out of the ifs')
+//   // return true;
+
+//   return isBalanced(tree.right)
+// }
+
+
+
+//find the shortest side and the longest side. 
+
+function shortest(tree) {
   if (!tree) {
-     return false;
+    return 0;
   }
-  if (!tree.right && !tree.left) {
-    return true;
+
+  //we want the smaller number
+  return Math.min(shortest(tree.right), shortest(tree.left)) +1  
+}
+
+
+function longest(tree) {
+  if (!tree) {
+    return 0;
   }
-  if (Math.abs(height(tree.right) - height(tree.left)) > 1) {
+  return Math.max(longest(tree.right), longest(tree.left)) +1
+}
+
+
+function balanced(tree) {
+  let short = shortest(tree)
+  let long = longest(tree)
+
+  if (long - short > 1) {
     return false;
   }
   return true;
